@@ -16,13 +16,25 @@ const cloudinary = require("cloudinary").v2;
 
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
-app.use(
-  cors({
-    credentials: true,
-    origin: "https://frontend-ecommerce-lyart-iota.vercel.app/"
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: "https://frontend-ecommerce-lyart-iota.vercel.app/"
   
-  })
-);
+//   })
+// );
+
+const corsOptions = {
+  origin: "https://frontend-ecommerce-lyart-iota.vercel.app",
+  credentials: true,
+  optionsSuccessStatus: 200 // For legacy browser support
+};
+
+app.use(cors(corsOptions));
+
+// Include this line to handle preflight requests
+app.options('*', cors(corsOptions));
+
 cloudinary.config({
     secure: true,
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
